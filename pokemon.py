@@ -11,6 +11,7 @@ class Pokemon:
 
 	def play(self):
 		'''if the game is in the playing state'''
+
 		while self._running:
 			# print("Game is running")
 			pygame.time.delay(100)
@@ -31,7 +32,13 @@ class Pokemon:
 	# def handle_pause_key_events():
 
 	def pause(self):
-		'''the pause state'''
+		'''the pause state brings up the settings.
+			So far, the setting includes exit, save, inventory(?)'''
+
+		## PROBLEM SO FAR IS THAT WHEN WE EXIT PLAY STATE WITH X
+		## PAUSE FUNCTION IS CALLED BEFORE IT EXIT. 
+		## NOT A MAJOR PROBLEM BUT PAUSE SHOULDN'T BE CALLED AT ALL
+		## PUT IF ELSE STATEMENTS
 		print("self.pause: pause state")
 
 		setting = pygame.image.load('backgrounds/settings.png')
@@ -79,29 +86,36 @@ class Pokemon:
 
 	def handle_mouse (self):
 		self._mousex, self._mousey = pygame.mouse.get_pos()
-		print("mouse coordinate")
-		print(self._mousex, self._mousey)
+		print("mouse coordinate: x = ", self._mousex, " y = ", self._mousey)
+		# print(self._mousex, self._mousey)
 
 
 
 	def handle_play_events(self):
 		# function to handle movements
 		keys = pygame.key.get_pressed()
-
+		character = None
 		'''
 		player movements
 		'''
+		d = ['d1']
 		if keys[pygame.K_UP]:
 			self.player.y -= self.player.velocity
+			
+			# self._window.blit(setting, (100,100))
 		if keys[pygame.K_DOWN]:
 			self.player.y += self.player.velocity
+			character = pygame.image.load('backgrounds/character1/' + d[0] + '.png')
 		if keys[pygame.K_RIGHT]:
 			self.player.x += self.player.velocity
 		if keys[pygame.K_LEFT]:
 			self.player.x -= self.player.velocity
 
+		if character != None:
+			self._window.blit(character, (self.player.x,self.player.y))
+
 		'''settings. Problem: holding any key shouldn't do anything'''
-		#put option for save
+		
 		if keys[pygame.K_LCTRL] and keys[pygame.K_s]:
 			print("Save option")
 			f = open("SAVED_GAME.txt", "w+")
