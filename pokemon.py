@@ -19,12 +19,18 @@ class Pokemon:
 			# right of the window
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
-					# self._running = False
 					self.quit()
 				elif event.type == pygame.MOUSEBUTTONDOWN:
+					print("Mouse detected in play state")
 					# if the user pressed the mouse
+					### Not sure if we need this during the play state
+					### Maybe if we click on something, we can get it's information??
+					### Not sure, but doesn't need this
 					self.handle_mouse()
 			self.handle_play_events()
+
+			### make a draw class
+			# self._window.fill((66, 245, 72)) #color of grass, don't turn it on, might hurt ur eyes
 			self._window.fill((0, 0, 0)) 
 			pygame.draw.rect(self._window, (255, 0, 0), (self.player.x, self.player.y, 
 				self.player.width, self.player.height))
@@ -32,17 +38,18 @@ class Pokemon:
 	# def handle_pause_key_events():
 
 	def pause(self):
-		'''the pause state brings up the settings.
-			So far, the setting includes exit, save, inventory(?)'''
+		''' the pause state brings up the settings.
+			So far, the setting includes exit, save, Pokedex(?), 
+			Pokemon, Personal info (badges,etc), bags (items)'''
 
-		## PROBLEM SO FAR IS THAT WHEN WE EXIT PLAY STATE WITH X
-		## PAUSE FUNCTION IS CALLED BEFORE IT EXIT. 
-		## NOT A MAJOR PROBLEM BUT PAUSE SHOULDN'T BE CALLED AT ALL
-		## PUT IF ELSE STATEMENTS
+		### PROBLEM SO FAR IS THAT WHEN WE EXIT PLAY STATE WITH X
+		### PAUSE FUNCTION IS CALLED BEFORE IT EXIT. 
+		### NOT A MAJOR PROBLEM BUT PAUSE SHOULDN'T BE CALLED AT ALL
+		### PUT IF ELSE STATEMENTS
 		print("self.pause: pause state")
 
 		setting = pygame.image.load('backgrounds/settings.png')
-		self._window.blit(setting, (100,100))
+		self._window.blit(setting, (50,100))
 		while self._pause == True:
 
 			for event in pygame.event.get():
@@ -51,10 +58,10 @@ class Pokemon:
 				if event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
 						'''
-					if user pressed esc again, then exit
-					pause state and resume the play state. The time wait prevent
-					the game from registering the key too fast  
-					'''
+						if user pressed esc again, then exit
+						pause state and resume the play state. The time wait prevent
+						the game from registering the key too fast  
+						'''
 						self._pause = False
 						self._running = True
 						pygame.time.wait(250)
@@ -62,6 +69,12 @@ class Pokemon:
 						pass
 					elif event.key == pygame.K_UP:
 						pass
+				if event.type == pygame.MOUSEBUTTONDOWN:
+					### If we use mouse instead of keyboard
+					### Checks to see the mouse click is within range of the option
+					### make sure to draw the options
+					self.handle_mouse()
+					# pass 
 			# self.handle_setting()
 			pygame.display.update()
 	def run(self):
