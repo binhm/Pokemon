@@ -1,6 +1,8 @@
 import pygame
 import player
 
+
+
 class Pokemon:
 	def __init__(self):
 		self._running = True
@@ -10,9 +12,12 @@ class Pokemon:
 		self._window = None
 		self._mousex, self._mousey = (0,0)
 
+		self.avatarcell = 0
+		# self.avatar = None
 	def play(self):
 		'''if the game is in the playing state'''
-
+		
+		self.avatar = pygame.image.load('backgrounds/character1/d.png').convert_alpha()
 		while self._running:
 			# print("Game is running")
 			pygame.time.delay(100)
@@ -22,6 +27,8 @@ class Pokemon:
 				if event.type == pygame.QUIT:
 					self.quit()
 				if event.type == pygame.VIDEORESIZE:
+					### NEED MORE WORK, MAKE SURE TO SEPARATE TO ANOTHER FILE
+
 					self._window = pygame.display.set_mode((event.w, event.h),
 															pygame.RESIZABLE)
 					self.player.x = event.w // 2
@@ -36,10 +43,11 @@ class Pokemon:
 			self.handle_play_events()
 
 			### make a draw class
-			# self._window.fill((66, 245, 72)) #color of grass, don't turn it on, might hurt ur eyes
 			self._window.fill((0, 0, 0)) 
-			pygame.draw.rect(self._window, (255, 0, 0), (self.player.x, self.player.y, 
-				self.player.width, self.player.height))
+	
+			self._window.blit(self.avatar, 
+				(self.player.x, self.player.y), 
+				(self.avatarcell*self.avatar.get_width()/4,0, self.avatar.get_width()/4, self.avatar.get_height()))
 			pygame.display.update()
 	# def handle_pause_key_events():
 
@@ -118,18 +126,39 @@ class Pokemon:
 		'''
 		player movements
 		'''
-		d = ['d1']
+		# d = ['d1']
 		if keys[pygame.K_UP]:
 			self.player.y -= self.player.velocity
-			
-			# self._window.blit(setting, (100,100))
+			self.avatar = pygame.image.load('backgrounds/character1/u.png').convert_alpha()
+			if self.avatarcell < 3:
+				self.avatarcell += 1
+			else:
+				self.avatarcell = 0
 		if keys[pygame.K_DOWN]:
 			self.player.y += self.player.velocity
-			character = pygame.image.load('backgrounds/character1/' + d[0] + '.png')
+			self.avatar = pygame.image.load('backgrounds/character1/d.png').convert_alpha()
+			if self.avatarcell < 3:
+				self.avatarcell += 1
+			else:
+				self.avatarcell = 0
+			
+
 		if keys[pygame.K_RIGHT]:
 			self.player.x += self.player.velocity
+			self.avatar= pygame.image.load('backgrounds/character1/r.png').convert_alpha()
+			if self.avatarcell < 3:
+				self.avatarcell += 1
+			else:
+				self.avatarcell = 0
+
+
 		if keys[pygame.K_LEFT]:
 			self.player.x -= self.player.velocity
+			self.avatar = pygame.image.load('backgrounds/character1/l.png').convert_alpha()
+			if self.avatarcell < 3:
+				self.avatarcell += 1
+			else:
+				self.avatarcell = 0
 
 		if character != None:
 			self._window.blit(character, (self.player.x,self.player.y))
