@@ -47,7 +47,7 @@ class Pokemon:
 	
 			self._window.blit(self.avatar, 
 				(self.player.x, self.player.y), 
-				(self.avatarcell*self.avatar.get_width()/4,0, self.avatar.get_width()/4, self.avatar.get_height()))
+				(self.player.avatarcell()*self.avatar.get_width()/4,0, self.avatar.get_width()/4, self.avatar.get_height()))
 			pygame.display.update()
 	# def handle_pause_key_events():
 
@@ -122,46 +122,23 @@ class Pokemon:
 	def handle_play_events(self):
 		# function to handle movements
 		keys = pygame.key.get_pressed()
-		character = None
+		
 		'''
 		player movements
 		'''
-		# d = ['d1']
 		if keys[pygame.K_UP]:
-			self.player.y -= self.player.velocity
 			self.avatar = pygame.image.load('backgrounds/character1/u.png').convert_alpha()
-			if self.avatarcell < 3:
-				self.avatarcell += 1
-			else:
-				self.avatarcell = 0
+			self.player.moveup()
 		if keys[pygame.K_DOWN]:
-			self.player.y += self.player.velocity
 			self.avatar = pygame.image.load('backgrounds/character1/d.png').convert_alpha()
-			if self.avatarcell < 3:
-				self.avatarcell += 1
-			else:
-				self.avatarcell = 0
-			
-
+			self.player.movedown()
 		if keys[pygame.K_RIGHT]:
-			self.player.x += self.player.velocity
 			self.avatar= pygame.image.load('backgrounds/character1/r.png').convert_alpha()
-			if self.avatarcell < 3:
-				self.avatarcell += 1
-			else:
-				self.avatarcell = 0
-
-
+			self.player.moveright()
 		if keys[pygame.K_LEFT]:
-			self.player.x -= self.player.velocity
 			self.avatar = pygame.image.load('backgrounds/character1/l.png').convert_alpha()
-			if self.avatarcell < 3:
-				self.avatarcell += 1
-			else:
-				self.avatarcell = 0
-
-		if character != None:
-			self._window.blit(character, (self.player.x,self.player.y))
+			self.player.moveleft()
+		
 
 		'''settings. Problem: holding any key shouldn't do anything'''
 		
