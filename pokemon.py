@@ -6,7 +6,8 @@ class Pokemon:
 		self._running = True
 		self._pause = False
 		self.keys = None
-		self.player = player.Player()
+		self.player = None
+		self._window = None
 		self._mousex, self._mousey = (0,0)
 
 	def play(self):
@@ -20,6 +21,11 @@ class Pokemon:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					self.quit()
+				if event.type == pygame.VIDEORESIZE:
+					self._window = pygame.display.set_mode((event.w, event.h),
+															pygame.RESIZABLE)
+					self.player.x = event.w // 2
+					self.player.y = event.h // 2
 				elif event.type == pygame.MOUSEBUTTONDOWN:
 					print("Mouse detected in play state")
 					# if the user pressed the mouse
@@ -80,7 +86,8 @@ class Pokemon:
 	def run(self):
 
 		pygame.init()
-		self._window = pygame.display.set_mode((600, 600))
+		self._window = pygame.display.set_mode((600, 600), pygame.RESIZABLE)
+		self.player = player.Player(600, 600)
 		pygame.display.set_caption('Pokemon') # Sets the window name 
 
 		
