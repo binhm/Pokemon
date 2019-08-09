@@ -25,18 +25,24 @@ class Player:
 
 	def current_row(self) -> int:
 		'''
-		Returns the cell of avatar movement and which one should be 
-		drawn on screen.
+		returns the current row of the cell to be drawn. 
+		Starts from 0
 		'''
 		return self._current_row
 	def current_col(self)->int:
+		'''
+		returns the current col of the cell to be drawn. 
+		Starts from 0
+		'''
 		return self._current_col
 
 	def sprite_row(self):
-		''' returns the # of row of the spritesheet'''
+		'''
+		returns total row of the spritesheet, starting from 1
+		'''
 		return self._spriter
 	def sprite_col(self):
-		''' returns the # of row of the spritesheet'''
+		''' returns total col of the spritesheet, starting from 1'''
 		return self._spritec
 	def sprite_total_cell(self):
 		''' total number of cells in the sprite sheet '''
