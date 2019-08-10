@@ -24,8 +24,8 @@ class Pokemon:
 		while start:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
-					start = True
-					pygame.quit() 
+					start = False
+					self.quit() 
 
 			self._window.fill((255, 255, 255))
 
@@ -45,9 +45,27 @@ class Pokemon:
 
 			if new_game.clicked():
 				start = False
+				self.character_selection()
+
+			if load_game.clicked():
+				pass	
 
 			pygame.display.update()
-		
+	
+	def character_selection(self):
+		selection = True
+
+		# While the user is selecting their character
+		while selection:
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					selection = False
+					self.quit()
+
+			self._window.fill((255, 255, 255))
+
+			pygame.display.update()
+
 	def play(self):
 		'''if the game is in the playing state'''
 		self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
