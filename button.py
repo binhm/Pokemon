@@ -28,6 +28,8 @@ class Button:
 
 		# If user is hovering over the button with their mouse
 		if self.x_pos + self.w > mouse_pos[0] > self.x_pos and self.y_pos + self.h > mouse_pos[1] > self.y_pos:
+			self.button_color = (255, 0, 0)
+			self.create()
 			return click[0] # If left key was pressed
 		return False # Key was not pressed
 
