@@ -50,8 +50,8 @@ class Pokemon:
 		
 	def play(self):
 		'''if the game is in the playing state'''
-		# self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
-		# self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
+		self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
+		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
 
 		# do the calculations of where to get the sprite movements
 		area = self.avatar.get_width(), self.avatar.get_height() # get the dimension of the entire image
@@ -151,8 +151,8 @@ class Pokemon:
 		##---------------------------set up characters -----------------##
 		## let player choose types of avatar
 		self.start_menu()
-		self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
-		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
+		# self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
+		# self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
 		##--------------------------------------------------------------##
 		
 
