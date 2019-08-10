@@ -64,6 +64,15 @@ class Pokemon:
 
 			self._window.fill((255, 255, 255))
 
+			character = pygame.image.load('backgrounds/character1/bd.png').convert_alpha()
+			# Going to need this to calculate which character to get from the whole image aka which movement
+			image_size = character.get_size()
+			# We want the first character in the first row so row = 1 and col = 1
+			character_width, character_height = image_size[0] / 4, image_size[1] / 1
+
+
+			self._window.blit(character, (300, 300), (0, 0, character_width, character_height))
+
 			pygame.display.update()
 
 	def play(self):
@@ -115,6 +124,7 @@ class Pokemon:
 				(self.player.x, self.player.y), 
 				(self.player.current_col()*sprite_width,self.player.current_row() * sprite_height, 
 				sprite_width, sprite_height))
+			
 			pygame.display.update()
 	# def handle_pause_key_events():
 
