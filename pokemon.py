@@ -1,6 +1,8 @@
 import pygame
 import player
 
+from button import Button
+
 
 
 class Pokemon:
@@ -14,6 +16,35 @@ class Pokemon:
 
 		self.avatarcell = 0
 		# self.avatar = None
+
+	def start_menu(self):
+		start = True
+
+		# While user is in the start menu	
+		while start:
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					start = True
+					pygame.quit() 
+
+			self._window.fill((255, 255, 255))
+
+			start_text = pygame.font.SysFont('Comic Sans MS', 100, bold=True)
+			text_surface = start_text.render('Pokemon', True, (0, 0, 0))
+			w, h = self._window.get_size()
+			text_rect = text_surface.get_rect(center = (w / 2, h - (h - 200)))
+			self._window.blit(text_surface, text_rect)
+
+			# Buttons: New Game and Load Game
+			new_game = Button(self._window, (100, 300, 100, 50), (0, 0, 0), 'New Game', 15, 'Comic Sans MS',
+				              (255, 255, 255))
+			load_game = Button(self._window, (400, 300, 100, 50), (0, 0, 0), 'Load Game', 15, 'Comic Sans MS',
+							  (255, 255, 255))
+			new_game.create()
+			load_game.create()
+
+			pygame.display.update()
+		
 	def play(self):
 		'''if the game is in the playing state'''
 		self.player.avatar(6) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
@@ -106,6 +137,7 @@ class Pokemon:
 					# pass 
 			# self.handle_setting()
 			pygame.display.update()
+
 	def run(self):
 
 		pygame.init()
@@ -113,10 +145,11 @@ class Pokemon:
 		self.player = player.Player(600, 600)
 		pygame.display.set_caption('Pokemon') # Sets the window name 
 
-		##---------------------------set up characters ------------------
+		##---------------------------set up characters -----------------##
 		## let player choose types of avatar
 		# self.player.avatar(1)
 		##--------------------------------------------------------------##
+		self.start_menu()
 		while not (self._running == False and self._pause == False):
 			
 			self.play()
@@ -125,10 +158,14 @@ class Pokemon:
 
 		pygame.quit()
 
+
 	def quit(self):
 		'''kills the game'''
 		self._running = False
 		self._pause = False
+
+	def button(self, x_pos, y_pos, width, height, text):
+		pass
 
 	def handle_mouse (self):
 		self._mousex, self._mousey = pygame.mouse.get_pos()
