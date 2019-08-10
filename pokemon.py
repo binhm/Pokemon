@@ -68,8 +68,8 @@ class Pokemon:
 
 	def play(self):
 		'''if the game is in the playing state'''
-		self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
-		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
+		# self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
+		# self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
 
 		# do the calculations of where to get the sprite movements
 		area = self.avatar.get_width(), self.avatar.get_height() # get the dimension of the entire image
@@ -162,8 +162,8 @@ class Pokemon:
 	def run(self):
 
 		pygame.init()
-		# self._window = pygame.display.set_mode((600, 600), pygame.RESIZABLE)
-		# self.player = player.Player(300, 300)
+		self._window = pygame.display.set_mode((600, 600), pygame.RESIZABLE)
+		self.player = player.Player(300, 300)
 		pygame.display.set_caption('Pokemon') # Sets the window name 
 
 		##---------------------------set up characters -----------------##
@@ -208,21 +208,13 @@ class Pokemon:
 		'''
 
 		if keys[pygame.K_UP]:
-			# self.avatar = pygame.image.load('backgrounds/character1/gu.png').convert_alpha()
 			self.player.moveup()
-			# self.player.move('u')
 		if keys[pygame.K_DOWN]:
-			# self.avatar = pygame.image.load('backgrounds/character1/gd.png').convert_alpha()
 			self.player.movedown()
-			# self.player.move('d')
 		if keys[pygame.K_RIGHT]:
-			# self.avatar= pygame.image.load('backgrounds/character1/gr.png').convert_alpha()
 			self.player.moveright()
-			# self.player.move('r')
 		if keys[pygame.K_LEFT]:
-			# self.avatar = pygame.image.load('backgrounds/character1/gl.png').convert_alpha()
 			self.player.moveleft()
-			# self.player.move('l')
 
 		'''settings. Problem: holding any key shouldn't do anything'''
 		
