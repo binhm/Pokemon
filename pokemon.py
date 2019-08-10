@@ -43,11 +43,14 @@ class Pokemon:
 			new_game.create()
 			load_game.create()
 
+			if new_game.clicked():
+				start = False
+
 			pygame.display.update()
 		
 	def play(self):
 		'''if the game is in the playing state'''
-		self.player.avatar(6) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
+		self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
 		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
 
 		# do the calculations of where to get the sprite movements
@@ -150,6 +153,7 @@ class Pokemon:
 		# self.player.avatar(1)
 		##--------------------------------------------------------------##
 		self.start_menu()
+
 		while not (self._running == False and self._pause == False):
 			
 			self.play()
