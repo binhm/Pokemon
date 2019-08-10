@@ -145,7 +145,7 @@ class Pokemon:
 
 		pygame.init()
 		self._window = pygame.display.set_mode((600, 600), pygame.RESIZABLE)
-		self.player = player.Player(600, 600)
+		self.player = player.Player(300, 300)
 		pygame.display.set_caption('Pokemon') # Sets the window name 
 
 		##---------------------------set up characters -----------------##
