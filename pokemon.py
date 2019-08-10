@@ -144,15 +144,16 @@ class Pokemon:
 	def run(self):
 
 		pygame.init()
-		self._window = pygame.display.set_mode((600, 600), pygame.RESIZABLE)
-		self.player = player.Player(300, 300)
+		# self._window = pygame.display.set_mode((600, 600), pygame.RESIZABLE)
+		# self.player = player.Player(300, 300)
 		pygame.display.set_caption('Pokemon') # Sets the window name 
 
 		##---------------------------set up characters -----------------##
 		## let player choose types of avatar
 		self.start_menu()
-		# self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
-		# self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
+		
+		self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
+		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
 		##--------------------------------------------------------------##
 		
 
