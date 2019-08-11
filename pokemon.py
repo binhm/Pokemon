@@ -20,12 +20,14 @@ class Pokemon:
 	def start_menu(self):
 		start = True
 
+		new_game = Button(self._window, (100, 300, 100, 50), (0, 0, 0), 'New Game', 15, 'Comic Sans MS',
+						 (255, 255, 255))
+		load_game = Button(self._window, (400, 300, 100, 50), (0, 0, 0), 'Load Game', 15, 'Comic Sans MS',
+						 (255, 255, 255))		
+
 		# While user is in the start menu	
+
 		while start:
-			for event in pygame.event.get():
-				if event.type == pygame.QUIT:
-					start = False
-					self.quit() 
 
 			self._window.fill((255, 255, 255))
 
@@ -35,33 +37,44 @@ class Pokemon:
 			text_rect = text_surface.get_rect(center = (w / 2, h - (h - 200)))
 			self._window.blit(text_surface, text_rect)
 
-			# Buttons: New Game and Load Game
-			new_game = Button(self._window, (100, 300, 100, 50), (0, 0, 0), 'New Game', 15, 'Comic Sans MS',
-				              (255, 255, 255))
-			load_game = Button(self._window, (400, 300, 100, 50), (0, 0, 0), 'Load Game', 15, 'Comic Sans MS',
-							  (255, 255, 255))
 			new_game.create()
 			load_game.create()
 
-			if new_game.clicked():
-				start = False
-				self.character_selection()
-
-			if load_game.clicked():
-				pass	
-
 			pygame.display.update()
+
+			for event in pygame.event.get():
+				mouse_pos = pygame.mouse.get_pos()
+
+				if event.type == pygame.QUIT:
+					start = False
+					pygame.quit()
+
+				if event.type == pygame.MOUSEBUTTONDOWN:
+					if new_game.hover(mouse_pos):
+						start = False
+					elif load_game.hover(mouse_pos):
+						pass
+
+				if event.type == pygame.MOUSEMOTION:
+					if new_game.hover(mouse_pos):
+						new_game.button_color = (255, 0, 0)
+					elif load_game.hover(mouse_pos):
+						load_game.button_color = (255, 0, 0)
+					else:
+						load_game.button_color = (0, 0, 0)
+						new_game.button_color = (0, 0, 0) 
+
 	
 	def character_selection(self):
 		selection = True
 
+		c1_button = Button(self._window, (70, 325, 75, 50), (0, 0, 0), 'Character 1', 10, 'Comic Sans MS',
+			             (255, 255, 255))
+		c2_button = Button(self._window, (470, 325, 75, 50), (0, 0, 0), 'Character 2', 10, 'Comic Sans MS',
+	              (255, 255, 255))
+
 		# While the user is selecting their character
 		while selection:
-			for event in pygame.event.get():
-				if event.type == pygame.QUIT:
-					selection = False
-					self.quit()
-
 			self._window.fill((255, 255, 255))
 
 			c1 = pygame.image.load('backgrounds/character1/bd.png').convert_alpha()
@@ -69,8 +82,6 @@ class Pokemon:
 			c1_w, c1_h = img1[0] / 4, img1[1] / 1
 			self._window.blit(c1, (100, 300), (0, 0, c1_w, c1_h))
 
-			c1_button = Button(self._window, (70, 325, 75, 50), (0, 0, 0), 'Character 1', 10, 'Comic Sans MS',
-				             (255, 255, 255))
 			c1_button.create()
 
 			c2 = pygame.image.load('backgrounds/character1/gd.png').convert_alpha()
@@ -78,20 +89,32 @@ class Pokemon:
 			c2_w, c2_h = img2[0] / 4, img2[1] / 1
 			self._window.blit(c2, (500, 300), (0, 0, c2_w, c2_h))
 
-			c2_button = Button(self._window, (470, 325, 75, 50), (0, 0, 0), 'Character 2', 10, 'Comic Sans MS',
-				              (255, 255, 255))
 			c2_button.create()
 
-			if c1_button.clicked():
-				selection = False
-				return 1
-			if c2_button.clicked():
-				selection = False
-				return 2
-
-
-
 			pygame.display.update()
+
+			for event in pygame.event.get():
+				mouse_pos = pygame.mouse.get_pos()
+
+				if event.type == pygame.QUIT:
+					selection = False
+					self.quit()
+
+
+				if event.type == pygame.MOUSEBUTTONDOWN:
+					if c1_button.hover(mouse_pos):
+						return 1
+					elif c2_button.hover(mouse_pos):
+						return 2
+
+				if event.type == pygame.MOUSEMOTION:
+					if c1_button.hover(mouse_pos):
+						c1_button.button_color = (255, 0, 0)
+					elif c2_button.hover(mouse_pos):
+						c2_button.button_color = (255, 0, 0)
+					else:
+						c1_button.button_color = (0, 0, 0)
+						c2_button.button_color = (0, 0, 0)
 
 	def play(self):
 		'''if the game is in the playing state'''
@@ -198,7 +221,6 @@ class Pokemon:
 		## let player choose types of avatar
 		self.start_menu()
 		character = self.character_selection()
-
 		self.player.avatar(character) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
 		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
 		##--------------------------------------------------------------##
@@ -217,9 +239,6 @@ class Pokemon:
 		'''kills the game'''
 		self._running = False
 		self._pause = False
-
-	def button(self, x_pos, y_pos, width, height, text):
-		pass
 
 	def handle_mouse (self):
 		self._mousex, self._mousey = pygame.mouse.get_pos()
