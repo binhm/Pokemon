@@ -64,14 +64,32 @@ class Pokemon:
 
 			self._window.fill((255, 255, 255))
 
-			character = pygame.image.load('backgrounds/character1/bd.png').convert_alpha()
-			# Going to need this to calculate which character to get from the whole image aka which movement
-			image_size = character.get_size()
-			# We want the first character in the first row so row = 1 and col = 1
-			character_width, character_height = image_size[0] / 4, image_size[1] / 1
+			c1 = pygame.image.load('backgrounds/character1/bd.png').convert_alpha()
+			img1 = c1.get_size()
+			c1_w, c1_h = img1[0] / 4, img1[1] / 1
+			self._window.blit(c1, (100, 300), (0, 0, c1_w, c1_h))
+
+			c1_button = Button(self._window, (70, 325, 75, 50), (0, 0, 0), 'Character 1', 10, 'Comic Sans MS',
+				             (255, 255, 255))
+			c1_button.create()
+
+			c2 = pygame.image.load('backgrounds/character1/gd.png').convert_alpha()
+			img2 = c2.get_size()
+			c2_w, c2_h = img2[0] / 4, img2[1] / 1
+			self._window.blit(c2, (500, 300), (0, 0, c2_w, c2_h))
+
+			c2_button = Button(self._window, (470, 325, 75, 50), (0, 0, 0), 'Character 2', 10, 'Comic Sans MS',
+				              (255, 255, 255))
+			c2_button.create()
+
+			if c1_button.clicked():
+				selection = False
+				return 1
+			if c2_button.clicked():
+				selection = False
+				return 2
 
 
-			self._window.blit(character, (300, 300), (0, 0, character_width, character_height))
 
 			pygame.display.update()
 
@@ -179,8 +197,9 @@ class Pokemon:
 		##---------------------------set up characters -----------------##
 		## let player choose types of avatar
 		self.start_menu()
-		
-		self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
+		character = self.character_selection()
+
+		self.player.avatar(character) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
 		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
 		##--------------------------------------------------------------##
 		
