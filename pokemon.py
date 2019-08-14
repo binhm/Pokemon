@@ -1,7 +1,8 @@
 import pygame
-import player
 
+import player
 from button import Button
+from avatar_selection import AvatarSelection
 
 
 
@@ -68,28 +69,25 @@ class Pokemon:
 	def character_selection(self):
 		selection = True
 
-		c1_button = Button(self._window, (70, 325, 75, 50), (0, 0, 0), 'Character 1', 10, 'Comic Sans MS',
-			             (255, 255, 255))
-		c2_button = Button(self._window, (470, 325, 75, 50), (0, 0, 0), 'Character 2', 10, 'Comic Sans MS',
-	              (255, 255, 255))
+		a1_button = Button(self._window, (70, 225, 75, 50), (0, 0, 0), 'Character 1', 10, 'Comic Sans MS',
+			              (255, 255, 255))
+		a2_button = Button(self._window, (270, 325, 75, 50), (0, 0, 0), 'Character 2', 10, 'Comic Sans MS',
+	                      (255, 255, 255))
+		a3_button = Button(self._window, (370, 325, 75, 50,), (0, 0, 0), 'Character 3', 10, 'Comic Sans MS',
+			              (255, 255, 255))
 
 		# While the user is selecting their character
 		while selection:
 			self._window.fill((255, 255, 255))
 
-			c1 = pygame.image.load('backgrounds/character1/bd.png').convert_alpha()
-			img1 = c1.get_size()
-			c1_w, c1_h = img1[0] / 4, img1[1] / 1
-			self._window.blit(c1, (100, 300), (0, 0, c1_w, c1_h))
+			a1 = AvatarSelection('backgrounds/character1/bd.png', 1, 4, 0, 0, 100, 200, self._window).create_avatar_selection()
+			a1_button.create()
 
-			c1_button.create()
+			a2 = AvatarSelection('backgrounds/character1/gd.png', 1, 4, 0, 0, 300, 300, self._window).create_avatar_selection()
+			a2_button.create()
 
-			c2 = pygame.image.load('backgrounds/character1/gd.png').convert_alpha()
-			img2 = c2.get_size()
-			c2_w, c2_h = img2[0] / 4, img2[1] / 1
-			self._window.blit(c2, (500, 300), (0, 0, c2_w, c2_h))
-
-			c2_button.create()
+			a3 = AvatarSelection('backgrounds/avatars/3.png', 4, 3, 0, 1, 400, 275, self._window).create_avatar_selection()
+			a3_button.create()
 
 			pygame.display.update()
 
@@ -102,19 +100,19 @@ class Pokemon:
 
 
 				if event.type == pygame.MOUSEBUTTONDOWN:
-					if c1_button.hover(mouse_pos):
+					if a1_button.hover(mouse_pos):
 						return 1
-					elif c2_button.hover(mouse_pos):
+					elif a2_button.hover(mouse_pos):
 						return 2
 
 				if event.type == pygame.MOUSEMOTION:
-					if c1_button.hover(mouse_pos):
-						c1_button.button_color = (255, 0, 0)
-					elif c2_button.hover(mouse_pos):
-						c2_button.button_color = (255, 0, 0)
+					if a1_button.hover(mouse_pos):
+						a1_button.button_color = (255, 0, 0)
+					elif a2_button.hover(mouse_pos):
+						a2_button.button_color = (255, 0, 0)
 					else:
-						c1_button.button_color = (0, 0, 0)
-						c2_button.button_color = (0, 0, 0)
+						a1_button.button_color = (0, 0, 0)
+						a2_button.button_color = (0, 0, 0)
 
 	def play(self):
 		'''if the game is in the playing state'''
