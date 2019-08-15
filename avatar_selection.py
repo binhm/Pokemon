@@ -1,5 +1,15 @@
 import pygame
 
+# Avatar Selection: Class to place avatars on the avatar selection screen
+#   self.image_path = Path were avatar image resides
+#   self.rows = The number of rows the avatar image has, see backgrounds/avatars
+#   self.cols = The number of columns the avater image has, see backgrounds/avatars
+#   self.row_d = The row where the avatar image that is looking down resides
+#   self.col_d = The column where the avatar image that is looking down resides
+#   self.x_pos = x-coordinate for the location where the avatar will be placed  
+#   self.y_pos = y-coordinate for the location where the avatar will be placed
+#   self.window = The surface to place the avatar
+
 class AvatarSelection:
 	def __init__(self, image, rows, columns, row_d, col_d, x_pos, y_pos, window):
 		self.image_path = image
