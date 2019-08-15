@@ -8,6 +8,10 @@ import mech
 _INITIAL_BACKGROUD_WIDTH = 300
 _INITIAL_BACKGROUD_HEIGHT = 300
 
+## entity is item created in the map
+## for example, walls, houses, field of grass
+ENTITY = []
+
 class Pokemon:
 	def __init__(self):
 		self._running = True
