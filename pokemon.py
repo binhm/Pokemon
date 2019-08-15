@@ -3,8 +3,10 @@ import pygame
 import player
 from button import Button
 from avatar_selection import AvatarSelection
+import mech
 
-
+_INITIAL_BACKGROUD_WIDTH = 300
+_INITIAL_BACKGROUD_HEIGHT = 300
 
 class Pokemon:
 	def __init__(self):
@@ -18,6 +20,7 @@ class Pokemon:
 		self.avatarcell = 0
 		# self.avatar = None
 
+		self.map = mech.Map()
 	def start_menu(self):
 		start = True
 
@@ -125,8 +128,8 @@ class Pokemon:
 		# self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
 
 		# do the calculations of where to get the sprite movements
-		area = self.avatar.get_width(), self.avatar.get_height() # get the dimension of the entire image
-		sprite_width, sprite_height = area[0]/self.player.sprite_col(), area[1]/self.player.sprite_row() 
+		# area = self.avatar.get_width(), self.avatar.get_height() # get the dimension of the entire image
+		# sprite_width, sprite_height = area[0]/self.player.sprite_col(), area[1]/self.player.sprite_row() 
 		
 		while self._running:
 			# print("Game is running")
@@ -161,16 +164,51 @@ class Pokemon:
 			self.handle_play_events()
 
 			### make a draw class
-			self._window.fill((0, 0, 0)) 
+			# self._window.fill((0, 0, 0)) 
+			self.draw()
 			
+			# self._window.blit(self.avatar, 
+			# 	(self.player.x, self.player.y), 
+			# 	(self.player.current_col()*sprite_width,self.player.current_row() * sprite_height, 
+			# 	sprite_width, sprite_height))
 			
-			self._window.blit(self.avatar, 
-				(self.player.x, self.player.y), 
-				(self.player.current_col()*sprite_width,self.player.current_row() * sprite_height, 
-				sprite_width, sprite_height))
-			
-			pygame.display.update()
-	# def handle_pause_key_events():
+			# pygame.display.update()
+	def draw(self):
+		'''draw the avatar when it moves '''
+
+		##--------------------------------##
+		## Draws and animate the avatar based on the sprite area and 
+		## position in the provided image
+		##--------------------------------##
+		area = self.avatar.get_width(), self.avatar.get_height() # get the dimension of the entire image
+		sprite_width, sprite_height = area[0]/self.player.sprite_col(), area[1]/self.player.sprite_row() 
+		self._window.fill((0, 0, 0)) 
+		self._window.blit(self.avatar, 
+			(self.player.x, self.player.y), 
+			(self.player.current_col()*sprite_width,self.player.current_row() * sprite_height, 
+			sprite_width, sprite_height))
+
+
+		## --------------------DEFAULT FOR NOW, TESTING###
+		NORMAL_COLOR = (65,65,65)
+		WALL_COLOR = (255, 0, 174)
+		x, y = 0, 0
+		for cell_list in self.map.data():
+			for cell in cell_list:
+				# if cell == 0:
+				# 	pass
+				# 	# pygame.draw.rect(self._window, NORMAL_COLOR, (x,y, 16,16))
+				if cell == 'w':
+					pygame.draw.rect(self._window, WALL_COLOR, (x,y, 16,16))
+					
+
+				x += 16
+			x = 0
+			y += 16 
+		## ------------------TESTING
+		pygame.display.update()
+
+
 
 	def pause(self):
 		''' the pause state brings up the settings.
@@ -216,18 +254,25 @@ class Pokemon:
 	def run(self):
 
 		pygame.init()
-		self._window = pygame.display.set_mode((600, 600), pygame.RESIZABLE)
-		self.player = player.Player(300, 300)
+		self._window = pygame.display.set_mode((_INITIAL_BACKGROUD_WIDTH, _INITIAL_BACKGROUD_HEIGHT), pygame.RESIZABLE)
+		self.player = player.Player(_INITIAL_BACKGROUD_WIDTH/2, _INITIAL_BACKGROUD_HEIGHT/2)
 		pygame.display.set_caption('Pokemon') # Sets the window name 
 
-		##---------------------------set up characters -----------------##
-		## let player choose types of avatar
-		self.start_menu()
-		character = self.avatar_selection()
-		self.player.avatar(character) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
+		# ## UNCOMENT THIS SECTION
+		# ##---------------------------set up characters -----------------##
+		# ## let player choose types of avatar
+		# self.start_menu()
+		# character = self.avatar_selection()
+		# self.player.avatar(character) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
+		# self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
+		# ##--------------------------------------------------------------##
+		# ## UNCOMENT SECTION
+
+		##---------------TESTING---------------##
+		self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
 		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
-		##--------------------------------------------------------------##
-		
+
+		##---------------END TESTING CODE -----##
 
 		while not (self._running == False and self._pause == False):
 			
@@ -285,6 +330,7 @@ class Pokemon:
 		
 
 if __name__ == '__main__':
+	print("uncomment lines in Pokemon.run()")
 	Pokemon().run()
 	print("in main")
     
