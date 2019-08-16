@@ -16,6 +16,8 @@ class Player:
 		self._area = 0
 		# self._track_row = 1
 		self._avatar = 0
+		# self.screen_height = screen_height
+		# self.screen_width = screen_width
 	def avatar(self, num: int)-> 'path':
 		'''player needs to choose avatar, 
 			numbered from 1 and return a string path'''
@@ -68,6 +70,7 @@ class Player:
 			self._spritec = 3
 			self.path = 'backgrounds/avatars/' + str(self._avatar) + '.png'
 
+	
 
 	def coordinates(self)-> (int, int):
 		'''returns the coordinates of the player
@@ -85,6 +88,7 @@ class Player:
 		self.path = 'backgrounds/character1/bd.png' if self._avatar == 1 else 'backgrounds/character1/gd.png' 
 		self._current_col += 1 if self._current_col < self.sprite_col()-1 else -self.sprite_col()+1
 		self.y += self.velocity
+
 	def moveleft(self):
 		
 		
@@ -92,6 +96,7 @@ class Player:
 		self.path = 'backgrounds/character1/bl.png' if self._avatar == 1 else 'backgrounds/character1/gl.png' 
 		self._current_col += 1 if self._current_col < self.sprite_col()-1 else -self.sprite_col()+1
 		self.x -= self.velocity
+		self.x = max(0, self.x)
 	def moveright(self):
 		
 		
@@ -99,11 +104,12 @@ class Player:
 		self.path = 'backgrounds/character1/br.png' if self._avatar == 1 else 'backgrounds/character1/gr.png' 
 		self._current_col += 1 if self._current_col < self.sprite_col()-1 else -self.sprite_col() + 1
 		self.x += self.velocity
+		
 	def moveup(self):
 		self._current_row = 0 if self._avatar <= 2 else 3
 		self.path = 'backgrounds/character1/bu.png' if self._avatar == 1 else 'backgrounds/character1/gu.png' 
 		self._current_col += 1 if self._current_col < self.sprite_col() -1  else -self.sprite_col() +1
 		self.y -= self.velocity
-
+		self.y = max (0, self.y)
 	def move(self, width, height):
 		pass

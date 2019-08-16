@@ -4,7 +4,7 @@ import player
 from button import Button
 from avatar_selection import AvatarSelection
 from text import Text
-# import mech
+import mech
 import pytmx
 _INITIAL_BACKGROUD_WIDTH = 300
 _INITIAL_BACKGROUD_HEIGHT = 300
@@ -27,10 +27,19 @@ class Pokemon:
 		# self.avatar = None
 
 		# self.map = mech.Map()
+		# self.tilemap = mech.Tiledmap(BACKGROUND)
+	def load(self):
+		self.map = mech.Tiledmap(BACKGROUND)
+		self.map_image = self.map.make_map()
+		self.map_rect = self.map_image.get_rect()
+
+		self.camera = mech.camera(self.map.width, self.map.height,self._window)
+		
+
 	def start_menu(self):
 		start = True
 
-		new_game = Button(self._window, (25, 150, 100, 50), (0, 0, 0), 'New Game', 15, 'Comic Sans MS',
+		new_game = Button(self._window, (25, 150, 100, 50),self.load() (0, 0, 0), 'New Game', 15, 'Comic Sans MS',
 						 (255, 255, 255))
 		load_game = Button(self._window, (150, 150, 100, 50), (0, 0, 0), 'Load Game', 15, 'Comic Sans MS',
 						 (255, 255, 255))		
@@ -181,7 +190,7 @@ class Pokemon:
 			self.handle_play_events()
 
 			### make a draw class
-			# self._window.fill((0, 0, 0)) 
+			self._window.fill((0, 0, 0))
 			self.draw()
 			
 			# self._window.blit(self.avatar, 
@@ -214,9 +223,19 @@ class Pokemon:
 		## Draws and animate the avatar based on the sprite area and 
 		## position in the provided image
 		##--------------------------------##
-		self.draw_map()
-		self.draw_avatar(self.player.x, self.player.y)
-		self.camera(self.player.x, self.player.y)
+		# self.tilemap.draw_map(self._window)
+		# width, height = self._window.get_size()
+
+		## draws the map
+		self._window.blit(self.map_image, self.camera.apply_rect(self.map_rect))
+
+		## avatar can move if the scrolling backgound is not moving
+
+		# self.draw_avatar(self.player.x, self.player.y)
+		# self.camera.update(self.player)
+		# self.tilemap.camera(self.player, self._window)
+		self.draw_avatar(_INITIAL_BACKGROUD_WIDTH/2, _INITIAL_BACKGROUD_HEIGHT/2)
+		# self.tilemap.camera(self.player, self._window)
 		
 		pygame.display.update()
 
@@ -237,22 +256,9 @@ class Pokemon:
 			(self.player.current_col()*sprite_width,self.player.current_row() * sprite_height, 
 			sprite_width, sprite_height))
 
-	def draw_map(self):
-		''' in charge of drawing maps/ or backgrounds'''
+		self.camera.update(self.player)
+	
 
-		ti = self.tmxdata.get_tile_image_by_gid
-		for layer in self.tmxdata.visible_layers:
-			if isinstance(layer, pytmx.TiledTileLayer):
-				for x,y,gid, in layer:
-					tile = ti(gid)
-					if tile:
-						self._window.blit(tile,( x * self.tmxdata.tilewidth, y * self.tmxdata.tilewidth))
-	def camera(self, x , y):
-		'''what will displays on the screen for player'''
-		## the camera's area is the area of the current 
-		## game window area
-		self.surface_width, self.surface_height = self._window.get_size()
-		self._window.scroll(x,y)
 		# print("pokemon.py - camera:{} {}".format(surface_width, surface_height))
 	def pause(self):
 		''' the pause state brings up the settings.
@@ -298,10 +304,10 @@ class Pokemon:
 	def run(self):
 
 		pygame.init()
-		self._window = pygame.display.set_mode((_INITIAL_BACKGROUD_WIDTH, _INITIAL_BACKGROUD_HEIGHT), pygame.RESIZABLE)
-		self.player = player.Player(_INITIAL_BACKGROUD_WIDTH/2, _INITIAL_BACKGROUD_HEIGHT/2)
-		pygame.display.set_caption('Pokemon') # Sets the window name 
 
+		self._window = pygame.display.set_mode((_INITIAL_BACKGROUD_WIDTH, _INITIAL_BACKGROUD_HEIGHT), pygame.RESIZABLE)
+
+		pygame.display.set_caption('Pokemon') # Sets the window name 
 		# ## UNCOMENT THIS SECTION
 		# ##---------------------------set up characters -----------------##
 		# ## let player choose types of avatar
@@ -309,13 +315,17 @@ class Pokemon:
 		# character = self.avatar_selection()
 		# self.player.avatar(character) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
 		# self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
+		# self.load()
 		# ##--------------------------------------------------------------##
 		# ## UNCOMENT SECTION
+		self.player = player.Player(_INITIAL_BACKGROUD_WIDTH/2, _INITIAL_BACKGROUD_HEIGHT/2)
 
+		self.load()
 		##---------------TESTING---------------##
 		self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
 		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
-		self.tmxdata = pytmx.load_pygame(BACKGROUND)
+		# self.tilemap = mech.Tiledmap(BACKGROUND)
+		# self.camera(0,0)
 		##---------------END TESTING CODE -----##
 
 		while not (self._running == False and self._pause == False):
