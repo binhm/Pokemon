@@ -24,48 +24,53 @@ class Pokemon:
 		self._mousex, self._mousey = (0,0)
 
 		self.avatarcell = 0
-		# self.avatar = None
 
-		# self.map = background_mech.Map()
-		# self.tilemap = background_mech.Tiledmap(BACKGROUND)
 	def load(self):
 		'''setting up the game before the game's main while loop '''
-
 
 		##-------------setting up pygame window---------------
 		pygame.init()
 		self._window = pygame.display.set_mode((_INITIAL_BACKGROUD_WIDTH, _INITIAL_BACKGROUD_HEIGHT), pygame.RESIZABLE)
 		pygame.display.set_caption('Pokemon') # Sets the window name 
 		##-------------setting up pygame window---------------
-
-		##-------setting up character selection---------------
-		self.start_menu()
-		self.player = player.Player(_INITIAL_BACKGROUD_WIDTH/2, _INITIAL_BACKGROUD_HEIGHT/2)
-		character = self.avatar_selection()
-		self.player.avatar(character) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
-		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
-		##-------setting up character selection---------------
+		try:
+			## Since this is outside the main while loop to start the game, therefore self.quit() doesn't apply
+			## if the user exit the window before the game starts,
+			## we need to prevent other functions from calling
 
 
-		## ----------setting up moving background-----------------
-		self.map = background_mech.Tiledmap(BACKGROUND) ## load filename
-		self.map_image = self.map.make_map() ## blit tiles to screen, return a surface with the tiles
-		self.map_rect = self.map_image.get_rect() 
+			##-------setting up character selection---------------
+			self.start_menu()
+			self.player = player.Player(_INITIAL_BACKGROUD_WIDTH/2, _INITIAL_BACKGROUD_HEIGHT/2)
+			character = self.avatar_selection() 
+			if character == None:
+				## temporary, maybe pit all of this under the start_menu
+				raise pygame.error()
+			self.player.avatar(character) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
+			self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
+			##-------setting up character selection---------------
 
-		self.camera = background_mech.camera(self.map.width, self.map.height,self._window)
-		## ----------setting up moving background-----------------
 
+			## ----------setting up moving background-----------------
+			self.map = background_mech.Tiledmap(BACKGROUND) ## load filename
+			self.map_image = self.map.make_map() ## blit tiles to screen, return a surface with the tiles
+			self.map_rect = self.map_image.get_rect() 
+
+			self.camera = background_mech.camera(self.map.width, self.map.height,self._window)
+			## ----------setting up moving background-----------------
+		except pygame.error:
+			self.quit()
+			
 	def start_menu(self):
-		start = True
 
+		start = True
 		new_game = Button(self._window, (25, 150, 100, 50),(0, 0, 0), 'New Game', 15, 'Comic Sans MS',
 						 (255, 255, 255))
 		load_game = Button(self._window, (150, 150, 100, 50), (0, 0, 0), 'Load Game', 15, 'Comic Sans MS',
 						 (255, 255, 255))		
 
 		# While user is in the start menu	
-
-		while start:
+		while start == True:
 
 			self._window.fill((255, 255, 255))
 
@@ -163,16 +168,18 @@ class Pokemon:
 
 	def play(self):
 		'''if the game is in the playing state'''
-		# self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
-		# self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
-
-		# do the calculations of where to get the sprite movements
-		# area = self.avatar.get_width(), self.avatar.get_height() # get the dimension of the entire image
-		# sprite_width, sprite_height = area[0]/self.player.sprite_col(), area[1]/self.player.sprite_row() 
-
+	
 		## TESTING AREA -------------------------
-		
-
+		## AREA FOR SPAWNING OBSTACLES
+		## iterate all the objects in the .tmx file 
+		## and check if it is stored in our obstacle dict
+		## and if it is, call the value of the dict, and pass it the arguments
+		## Need to keep track of when the maps change
+		dic = {'water', 'grass', 'wall'}
+		for tile_object in self.map.tmxdata.objects:
+			if tile_object.name in dic:
+				print(tile_object.name)
+			
 
 		## TESTING AREA -------------------------
 
@@ -221,35 +228,10 @@ class Pokemon:
 	def draw(self):
 		'''draw the avatar when it moves '''
 
-
-		## --------------------DEFAULT FOR NOW, TESTING###
-		
-		
-		# for cell_list in self.map.data():
-		# 	for cell in cell_list:
-		# 		# if cell == 0:
-		# 		# 	pass
-		# 		# 	# pygame.draw.rect(self._window, NORMAL_COLOR, (x,y, 16,16))
-		# 		if cell == 'w':
-		# 			pygame.draw.rect(self._window, WALL_COLOR, (x,y, 16,16))
-					
-
-		# 		x += 16
-		# 	x = 0
-		# 	y += 16 
-		## ------------------TESTING
-		##--------------------------------##
-		## Draws and animate the avatar based on the sprite area and 
-		## position in the provided image
-		##--------------------------------##
-		# self.tilemap.draw_map(self._window)
-		# width, height = self._window.get_size()
-
 		## draws the map
 		self._window.blit(self.map_image, self.camera.apply_rect(self.map_rect))
 
 		## avatar can move if the scrolling backgound is not moving
-
 		# self.draw_avatar(self.player.x, self.player.y)
 		# self.camera.update(self.player)
 		# self.tilemap.camera(self.player, self._window)
@@ -362,6 +344,7 @@ class Pokemon:
 
 	def quit(self):
 		'''kills the game'''
+
 		self._running = False
 		self._pause = False
 
@@ -407,7 +390,8 @@ class Pokemon:
 		
 
 if __name__ == '__main__':
-	print("uncomment lines in Pokemon.run()")
+	# print("uncomment lines in Pokemon.run()")
+	print("Adding games mechanic is in Pokemon.play().")
 	Pokemon().run()
 	print("in main")
     

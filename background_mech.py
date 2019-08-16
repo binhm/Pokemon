@@ -1,7 +1,5 @@
 '''
-Handles the mechanics of the game
-Handles how the avatar interacts with
-the World
+Code for 
 '''
 
 import pytmx
@@ -38,13 +36,16 @@ class Map:
 class Tiledmap:
 	def __init__(self, filename: str):
 		# to get the transparency, set pixelalpha to true in the 
-		# second argument of load_pygame
+		# second argument of load_pygame, not needed in this case since there's no 
+		# transparency in our case
 		self.tmxdata = pytmx.load_pygame(filename)
+
+		# find the entire map's dimension by titlewidth * num of tiles across and below
 		self.width = self.tmxdata.width * self.tmxdata.tilewidth #the width of the image
 		self.height = self.tmxdata.height * self.tmxdata.tileheight
 	
 	def draw_map(self, surface: pygame.Surface):
-		'''will draw the entire .tmx map into pygame window'''
+		'''Iterate the .xml file and blit all the tiles on screen '''
 
 		ti = self.tmxdata.get_tile_image_by_gid
 		for layer in self.tmxdata.visible_layers:
@@ -105,5 +106,5 @@ class camera:
 		x = max(-(self.width - WIDTH), x)  # right
 		y = max(-(self.height - HEIGHT), y)  # bottom
 
-		print("mech.py: map offset x = {}, y = {}".format(x,y))
+		# print("mech.py: map offset x = {}, y = {}".format(x,y))
 		self.camera = pygame.Rect(x, y, self.width, self.height)
