@@ -4,7 +4,7 @@ import player
 from button import Button
 from avatar_selection import AvatarSelection
 from text import Text
-import mech
+import background_mech
 import pytmx
 _INITIAL_BACKGROUD_WIDTH = 300
 _INITIAL_BACKGROUD_HEIGHT = 300
@@ -26,14 +26,14 @@ class Pokemon:
 		self.avatarcell = 0
 		# self.avatar = None
 
-		# self.map = mech.Map()
-		# self.tilemap = mech.Tiledmap(BACKGROUND)
+		# self.map = background_mech.Map()
+		# self.tilemap = background_mech.Tiledmap(BACKGROUND)
 	def load(self):
-		self.map = mech.Tiledmap(BACKGROUND)
+		self.map = background_mech.Tiledmap(BACKGROUND)
 		self.map_image = self.map.make_map()
 		self.map_rect = self.map_image.get_rect()
 
-		self.camera = mech.camera(self.map.width, self.map.height,self._window)
+		self.camera = background_mech.camera(self.map.width, self.map.height,self._window)
 		
 
 	def start_menu(self):
@@ -324,7 +324,7 @@ class Pokemon:
 		##---------------TESTING---------------##
 		self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
 		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
-		# self.tilemap = mech.Tiledmap(BACKGROUND)
+		# self.tilemap = background_mech.Tiledmap(BACKGROUND)
 		# self.camera(0,0)
 		##---------------END TESTING CODE -----##
 
