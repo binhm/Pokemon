@@ -308,6 +308,7 @@ class Pokemon:
 		self._window = pygame.display.set_mode((_INITIAL_BACKGROUD_WIDTH, _INITIAL_BACKGROUD_HEIGHT), pygame.RESIZABLE)
 
 		pygame.display.set_caption('Pokemon') # Sets the window name 
+
 		# ## UNCOMENT THIS SECTION
 		# ##---------------------------set up characters -----------------##
 		# ## let player choose types of avatar
@@ -318,10 +319,11 @@ class Pokemon:
 		# self.load()
 		# ##--------------------------------------------------------------##
 		# ## UNCOMENT SECTION
-		self.player = player.Player(_INITIAL_BACKGROUD_WIDTH/2, _INITIAL_BACKGROUD_HEIGHT/2)
 
-		self.load()
+		
 		##---------------TESTING---------------##
+		self.player = player.Player(_INITIAL_BACKGROUD_WIDTH/2, _INITIAL_BACKGROUD_HEIGHT/2)
+		self.load()
 		self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
 		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
 		# self.tilemap = background_mech.Tiledmap(BACKGROUND)

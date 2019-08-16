@@ -78,17 +78,17 @@ class camera:
 		self.surface = surface
 		## self.height & self.width is the surface size of the tilemap
 		## we want to find the right pixels to blit
-	# def apply(self, entity):
+	def apply(self, entity):
 		
-	# 	return entity.rect.move(self.camera.topleft)
+		return entity.rect.move(self.camera.topleft)
 
-	def apply_rect(self, rect)->pygame.Rect:
+	def apply_rect(self, rect):
 		return rect.move(self.camera.topleft)
 
 
-	def update(self, target:player.Player):
+	def update(self, target):
 		'''changes the coordinate of screen itself 
-		so that it create moving background.  '''
+		so that it create moving background. Target is player '''
 
 		### so many problems with this one.....
 		### target pixel goes off screen

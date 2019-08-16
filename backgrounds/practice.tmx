@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="18">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="18">
  <tileset firstgid="1" source="Pokemon-tileset1.tsx"/>
  <tileset firstgid="6007" source="tileset-pokemon_dawn.tsx"/>
  <tileset firstgid="20765" source="tress2.tsx"/>
