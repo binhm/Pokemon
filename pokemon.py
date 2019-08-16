@@ -3,6 +3,7 @@ import pygame
 import player
 from button import Button
 from avatar_selection import AvatarSelection
+from text import Text
 import mech
 
 _INITIAL_BACKGROUD_WIDTH = 300
@@ -28,9 +29,9 @@ class Pokemon:
 	def start_menu(self):
 		start = True
 
-		new_game = Button(self._window, (100, 300, 100, 50), (0, 0, 0), 'New Game', 15, 'Comic Sans MS',
+		new_game = Button(self._window, (25, 150, 100, 50), (0, 0, 0), 'New Game', 15, 'Comic Sans MS',
 						 (255, 255, 255))
-		load_game = Button(self._window, (400, 300, 100, 50), (0, 0, 0), 'Load Game', 15, 'Comic Sans MS',
+		load_game = Button(self._window, (150, 150, 100, 50), (0, 0, 0), 'Load Game', 15, 'Comic Sans MS',
 						 (255, 255, 255))		
 
 		# While user is in the start menu	
@@ -39,11 +40,15 @@ class Pokemon:
 
 			self._window.fill((255, 255, 255))
 
-			start_text = pygame.font.SysFont('Comic Sans MS', 100, bold=True)
-			text_surface = start_text.render('Pokemon', True, (0, 0, 0))
+			# start_text = pygame.font.SysFont('Comic Sans MS', 100, bold=True)
+			# text_surface = start_text.render('Pokemon', True, (0, 0, 0))
+			# w, h = self._window.get_size()
+			# text_rect = text_surface.get_rect(center = (w / 2, h - (h - 200)))
+			# self._window.blit(text_surface, text_rect)
+
 			w, h = self._window.get_size()
-			text_rect = text_surface.get_rect(center = (w / 2, h - (h - 200)))
-			self._window.blit(text_surface, text_rect)
+			start_logo = Text('Comic Sans MS', 50, 'Pokemon', (0, 0, 0), self._window, w / 2, h - (h - 50))
+			start_logo.create()
 
 			new_game.create()
 			load_game.create()
@@ -75,12 +80,13 @@ class Pokemon:
 	
 	def avatar_selection(self):
 		selection = True
+		w, h = self._window.get_size()
 
-		a1_button = Button(self._window, (170, 325, 75, 50), (0, 0, 0), 'Avtar 1', 10, 'Comic Sans MS',
+		a1_button = Button(self._window, (w - (w - 25), h / 2 + 25, 75, 40), (0, 0, 0), 'Avtar 1', 10, 'Comic Sans MS',
 			              (255, 255, 255))
-		a2_button = Button(self._window, (270, 325, 75, 50), (0, 0, 0), 'Avatar 2', 10, 'Comic Sans MS',
+		a2_button = Button(self._window, (w - (w - 120), h / 2 + 25, 75, 40), (0, 0, 0), 'Avatar 2', 10, 'Comic Sans MS',
 	                      (255, 255, 255))
-		a3_button = Button(self._window, (375, 325, 75, 50,), (0, 0, 0), 'Avatar 3', 10, 'Comic Sans MS',
+		a3_button = Button(self._window, (w - (w - 200), h / 2 + 25, 75, 40), (0, 0, 0), 'Avatar 3', 10, 'Comic Sans MS',
 			              (255, 255, 255))
 
 		# While the user is selecting their character
@@ -265,10 +271,10 @@ class Pokemon:
 		# ## UNCOMENT THIS SECTION
 		# ##---------------------------set up characters -----------------##
 		# ## let player choose types of avatar
-		# self.start_menu()
-		# character = self.avatar_selection()
-		# self.player.avatar(character) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
-		# self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
+		self.start_menu()
+		character = self.avatar_selection()
+		self.player.avatar(character) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
+		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
 		# ##--------------------------------------------------------------##
 		# ## UNCOMENT SECTION
 
