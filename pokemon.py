@@ -4,10 +4,11 @@ import player
 from button import Button
 from avatar_selection import AvatarSelection
 from text import Text
-import mech
-
+# import mech
+import pytmx
 _INITIAL_BACKGROUD_WIDTH = 300
 _INITIAL_BACKGROUD_HEIGHT = 300
+BACKGROUND = 'backgrounds/practice.tmx'
 
 ## entity is item created in the map
 ## for example, walls, houses, field of grass
@@ -25,7 +26,7 @@ class Pokemon:
 		self.avatarcell = 0
 		# self.avatar = None
 
-		self.map = mech.Map()
+		# self.map = mech.Map()
 	def start_menu(self):
 		start = True
 
@@ -140,7 +141,13 @@ class Pokemon:
 		# do the calculations of where to get the sprite movements
 		# area = self.avatar.get_width(), self.avatar.get_height() # get the dimension of the entire image
 		# sprite_width, sprite_height = area[0]/self.player.sprite_col(), area[1]/self.player.sprite_row() 
+
+		## TESTING AREA -------------------------
 		
+
+
+		## TESTING AREA -------------------------
+
 		while self._running:
 			# print("Game is running")
 
@@ -186,40 +193,67 @@ class Pokemon:
 	def draw(self):
 		'''draw the avatar when it moves '''
 
+
+		## --------------------DEFAULT FOR NOW, TESTING###
+		
+		
+		# for cell_list in self.map.data():
+		# 	for cell in cell_list:
+		# 		# if cell == 0:
+		# 		# 	pass
+		# 		# 	# pygame.draw.rect(self._window, NORMAL_COLOR, (x,y, 16,16))
+		# 		if cell == 'w':
+		# 			pygame.draw.rect(self._window, WALL_COLOR, (x,y, 16,16))
+					
+
+		# 		x += 16
+		# 	x = 0
+		# 	y += 16 
+		## ------------------TESTING
 		##--------------------------------##
 		## Draws and animate the avatar based on the sprite area and 
 		## position in the provided image
 		##--------------------------------##
-		area = self.avatar.get_width(), self.avatar.get_height() # get the dimension of the entire image
-		sprite_width, sprite_height = area[0]/self.player.sprite_col(), area[1]/self.player.sprite_row() 
-		self._window.fill((0, 0, 0)) 
-		self._window.blit(self.avatar, 
-			(self.player.x, self.player.y), 
-			(self.player.current_col()*sprite_width,self.player.current_row() * sprite_height, 
-			sprite_width, sprite_height))
-
-
-		## --------------------DEFAULT FOR NOW, TESTING###
-		NORMAL_COLOR = (65,65,65)
-		WALL_COLOR = (255, 0, 174)
-		x, y = 0, 0
-		for cell_list in self.map.data():
-			for cell in cell_list:
-				# if cell == 0:
-				# 	pass
-				# 	# pygame.draw.rect(self._window, NORMAL_COLOR, (x,y, 16,16))
-				if cell == 'w':
-					pygame.draw.rect(self._window, WALL_COLOR, (x,y, 16,16))
-					
-
-				x += 16
-			x = 0
-			y += 16 
-		## ------------------TESTING
+		self.draw_map()
+		self.draw_avatar(self.player.x, self.player.y)
+		self.camera(self.player.x, self.player.y)
+		
 		pygame.display.update()
 
 
+	def draw_avatar(self, x, y):
+		''' draws the avatar on screen '''
+		##---------------------------------------------------------##
+		## Avatar animation, chooses the coordinate of the avatar's
+		## movement in the .png file
+		##---------------------------------------------------------##
 
+		area = self.avatar.get_width(), self.avatar.get_height() # get the dimension of the entire image
+		sprite_width, sprite_height = area[0]/self.player.sprite_col(), area[1]/self.player.sprite_row() 
+
+		## blit the screen once we got the avatar
+		self._window.blit(self.avatar, 
+			(x, y), 
+			(self.player.current_col()*sprite_width,self.player.current_row() * sprite_height, 
+			sprite_width, sprite_height))
+
+	def draw_map(self):
+		''' in charge of drawing maps/ or backgrounds'''
+
+		ti = self.tmxdata.get_tile_image_by_gid
+		for layer in self.tmxdata.visible_layers:
+			if isinstance(layer, pytmx.TiledTileLayer):
+				for x,y,gid, in layer:
+					tile = ti(gid)
+					if tile:
+						self._window.blit(tile,( x * self.tmxdata.tilewidth, y * self.tmxdata.tilewidth))
+	def camera(self, x , y):
+		'''what will displays on the screen for player'''
+		## the camera's area is the area of the current 
+		## game window area
+		self.surface_width, self.surface_height = self._window.get_size()
+		self._window.scroll(x,y)
+		# print("pokemon.py - camera:{} {}".format(surface_width, surface_height))
 	def pause(self):
 		''' the pause state brings up the settings.
 			So far, the setting includes exit, save, Pokedex(?), 
@@ -271,17 +305,17 @@ class Pokemon:
 		# ## UNCOMENT THIS SECTION
 		# ##---------------------------set up characters -----------------##
 		# ## let player choose types of avatar
-		self.start_menu()
-		character = self.avatar_selection()
-		self.player.avatar(character) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
-		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
+		# self.start_menu()
+		# character = self.avatar_selection()
+		# self.player.avatar(character) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
+		# self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
 		# ##--------------------------------------------------------------##
 		# ## UNCOMENT SECTION
 
 		##---------------TESTING---------------##
 		self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
 		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
-
+		self.tmxdata = pytmx.load_pygame(BACKGROUND)
 		##---------------END TESTING CODE -----##
 
 		while not (self._running == False and self._pause == False):
