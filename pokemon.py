@@ -29,17 +29,36 @@ class Pokemon:
 		# self.map = background_mech.Map()
 		# self.tilemap = background_mech.Tiledmap(BACKGROUND)
 	def load(self):
-		self.map = background_mech.Tiledmap(BACKGROUND)
-		self.map_image = self.map.make_map()
-		self.map_rect = self.map_image.get_rect()
+		'''setting up the game before the game's main while loop '''
+
+
+		##-------------setting up pygame window---------------
+		pygame.init()
+		self._window = pygame.display.set_mode((_INITIAL_BACKGROUD_WIDTH, _INITIAL_BACKGROUD_HEIGHT), pygame.RESIZABLE)
+		pygame.display.set_caption('Pokemon') # Sets the window name 
+		##-------------setting up pygame window---------------
+
+		##-------setting up character selection---------------
+		self.start_menu()
+		self.player = player.Player(_INITIAL_BACKGROUD_WIDTH/2, _INITIAL_BACKGROUD_HEIGHT/2)
+		character = self.avatar_selection()
+		self.player.avatar(character) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
+		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
+		##-------setting up character selection---------------
+
+
+		## ----------setting up moving background-----------------
+		self.map = background_mech.Tiledmap(BACKGROUND) ## load filename
+		self.map_image = self.map.make_map() ## blit tiles to screen, return a surface with the tiles
+		self.map_rect = self.map_image.get_rect() 
 
 		self.camera = background_mech.camera(self.map.width, self.map.height,self._window)
-		
+		## ----------setting up moving background-----------------
 
 	def start_menu(self):
 		start = True
 
-		new_game = Button(self._window, (25, 150, 100, 50),self.load() (0, 0, 0), 'New Game', 15, 'Comic Sans MS',
+		new_game = Button(self._window, (25, 150, 100, 50),(0, 0, 0), 'New Game', 15, 'Comic Sans MS',
 						 (255, 255, 255))
 		load_game = Button(self._window, (150, 150, 100, 50), (0, 0, 0), 'Load Game', 15, 'Comic Sans MS',
 						 (255, 255, 255))		
@@ -303,16 +322,18 @@ class Pokemon:
 
 	def run(self):
 
-		pygame.init()
-
-		self._window = pygame.display.set_mode((_INITIAL_BACKGROUD_WIDTH, _INITIAL_BACKGROUD_HEIGHT), pygame.RESIZABLE)
-
-		pygame.display.set_caption('Pokemon') # Sets the window name 
-
+		## DO NOT UNCOMMENT, SECTION MOVE TO load()
 		# ## UNCOMENT THIS SECTION
+		# pygame.init()
+
+		# self._window = pygame.display.set_mode((_INITIAL_BACKGROUD_WIDTH, _INITIAL_BACKGROUD_HEIGHT), pygame.RESIZABLE)
+
+		# pygame.display.set_caption('Pokemon') # Sets the window name 
+
 		# ##---------------------------set up characters -----------------##
 		# ## let player choose types of avatar
 		# self.start_menu()
+		# self.player = player.Player(_INITIAL_BACKGROUD_WIDTH/2, _INITIAL_BACKGROUD_HEIGHT/2)
 		# character = self.avatar_selection()
 		# self.player.avatar(character) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
 		# self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
@@ -321,14 +342,14 @@ class Pokemon:
 		# ## UNCOMENT SECTION
 
 		
-		##---------------TESTING---------------##
-		self.player = player.Player(_INITIAL_BACKGROUD_WIDTH/2, _INITIAL_BACKGROUD_HEIGHT/2)
+		# ##---------------TESTING---------------##
+		# self.player = player.Player(_INITIAL_BACKGROUD_WIDTH/2, _INITIAL_BACKGROUD_HEIGHT/2)
 		self.load()
-		self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
-		self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
-		# self.tilemap = background_mech.Tiledmap(BACKGROUND)
-		# self.camera(0,0)
-		##---------------END TESTING CODE -----##
+		# self.player.avatar(1) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
+		# self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
+		# # self.tilemap = background_mech.Tiledmap(BACKGROUND)
+		# # self.camera(0,0)
+		# ##---------------END TESTING CODE -----##
 
 		while not (self._running == False and self._pause == False):
 			
