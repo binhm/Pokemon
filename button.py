@@ -23,8 +23,4 @@ class Button:
 		self.surface.blit(bt_surface, bt_rect)
 
 	def hover(self, mouse_pos):
-		mouse_pos = pygame.mouse.get_pos()
-
-		if (self.x_pos + self.w > mouse_pos[0] > self.x_pos) and (self.y_pos + self.h > mouse_pos[1] > self.y_pos):
-			return True
-		return False
+		return self.x_pos + self.w > mouse_pos[0] > self.x_pos and self.y_pos + self.h > mouse_pos[1] > self.y_pos

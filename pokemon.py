@@ -64,7 +64,11 @@ class Pokemon:
 	def start_menu(self):
 
 		start = True
-		new_game = Button(self._window, (25, 150, 100, 50),(0, 0, 0), 'New Game', 15, 'Comic Sans MS',
+		w, h = self._window.get_size()
+		
+		start_logo = Text('Comic Sans MS', 50, 'Pokemon', (0, 0, 0), self._window, w / 2, h - (h - 50))
+		sample_text = Text('Comic Sans MS', 20, 'Test', (0, 0, 0), self._window, 25, 20)
+		new_game = Button(self._window, (25, 150, 100, 50),(0, 0, 0), 'Nice', 15, 'Comic Sans MS',
 						 (255, 255, 255))
 		load_game = Button(self._window, (150, 150, 100, 50), (0, 0, 0), 'Load Game', 15, 'Comic Sans MS',
 						 (255, 255, 255))		
@@ -74,16 +78,7 @@ class Pokemon:
 
 			self._window.fill((255, 255, 255))
 
-			# start_text = pygame.font.SysFont('Comic Sans MS', 100, bold=True)
-			# text_surface = start_text.render('Pokemon', True, (0, 0, 0))
-			# w, h = self._window.get_size()
-			# text_rect = text_surface.get_rect(center = (w / 2, h - (h - 200)))
-			# self._window.blit(text_surface, text_rect)
-
-			w, h = self._window.get_size()
-			start_logo = Text('Comic Sans MS', 50, 'Pokemon', (0, 0, 0), self._window, w / 2, h - (h - 50))
 			start_logo.create()
-
 			new_game.create()
 			load_game.create()
 
@@ -107,9 +102,12 @@ class Pokemon:
 						new_game.button_color = (255, 0, 0)
 					elif load_game.hover(mouse_pos):
 						load_game.button_color = (255, 0, 0)
+					elif start_logo.hover(mouse_pos):
+						start_logo.text_color = (255, 0, 0)
 					else:
 						load_game.button_color = (0, 0, 0)
 						new_game.button_color = (0, 0, 0) 
+						start_logo.text_color = (0, 0, 0)
 
 	
 	def avatar_selection(self):
