@@ -6,6 +6,7 @@ import pytmx
 #pixel
 import pygame
 import player
+
 TILE_HEIGHT = 16
 TILE_WIDTH = 16
 
@@ -57,9 +58,7 @@ class Tiledmap:
 
 						# print("x = {}, y={}".format(x,y))
 						surface.blit(tile,( x * self.tmxdata.tilewidth, y * self.tmxdata.tilewidth))
-			elif isinstance(layer, pytmx.TiledObjectGroup):
-				# print(" OBJECT GROUP IS NOT HANDLED")
-				pass
+			
 
 	def make_map(self)-> pygame.Surface:
 		'''make a temporary surface with the .tmx 
@@ -79,10 +78,7 @@ class camera:
 		self.surface = surface
 		## self.height & self.width is the surface size of the tilemap
 		## we want to find the right pixels to blit
-	# def apply(self, entity):
-		
-	# 	return entity.rect.move(self.camera.topleft)
-
+	
 	def apply_rect(self, rect)->pygame.Rect:
 		return rect.move(self.camera.topleft)
 
