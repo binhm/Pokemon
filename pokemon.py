@@ -82,6 +82,14 @@ class Pokemon:
 			new_game.create()
 			load_game.create()
 
+			if new_game.clicked():
+				start = False
+			if load_game.clicked():
+				pass
+
+			new_game.hover()
+			load_game.hover()
+
 			pygame.display.update()
 
 			for event in pygame.event.get():
@@ -90,21 +98,6 @@ class Pokemon:
 				if event.type == pygame.QUIT:
 					start = False
 					pygame.quit()
-
-				if event.type == pygame.MOUSEBUTTONDOWN:
-					if new_game.hover(mouse_pos):
-						start = False
-					elif load_game.hover(mouse_pos):
-						pass
-
-				if event.type == pygame.MOUSEMOTION:
-					if new_game.hover(mouse_pos):
-						new_game.button_color = (255, 0, 0)
-					elif load_game.hover(mouse_pos):
-						load_game.button_color = (255, 0, 0)
-					else:
-						load_game.button_color = (0, 0, 0)
-						new_game.button_color = (0, 0, 0) 
 
 	
 	def avatar_selection(self):
@@ -139,27 +132,7 @@ class Pokemon:
 				if event.type == pygame.QUIT:
 					selection = False
 					self.quit()
-
-
-				if event.type == pygame.MOUSEBUTTONDOWN:
-					if a1_button.hover(mouse_pos):
-						return 1
-					elif a2_button.hover(mouse_pos):
-						return 2
-					elif a3_button.hover(mouse_pos):
-						return 3
-
-				if event.type == pygame.MOUSEMOTION:
-					if a1_button.hover(mouse_pos):
-						a1_button.button_color = (255, 0, 0)
-					elif a2_button.hover(mouse_pos):
-						a2_button.button_color = (255, 0, 0)
-					elif a3_button.hover(mouse_pos):
-						a3_button.button_color = (255, 0, 0)
-					else:
-						a1_button.button_color = (0, 0, 0)
-						a2_button.button_color = (0, 0, 0)
-						a3_button.button_color = (0, 0, 0)
+					
 
 	def play(self):
 		'''if the game is in the playing state'''

@@ -21,5 +21,15 @@ class Button:
 		bt_rect = bt_surface.get_rect(center = (self.x_pos + self.w / 2, self.y_pos + self.h / 2))
 		self.surface.blit(bt_surface, bt_rect)
 
-	def hover(self, mouse_pos):
-		return self.x_pos + self.w > mouse_pos[0] > self.x_pos and self.y_pos + self.h > mouse_pos[1] > self.y_pos
+	def hover(self):
+		mouse_pos = pygame.mouse.get_pos()
+		if self.x_pos + self.w > mouse_pos[0] > self.x_pos and self.y_pos + self.h > mouse_pos[1] > self.y_pos:
+			self.button_color = (255, 0, 0)
+			return True
+		self.button_color = (0, 0, 0)
+		return False
+
+	def clicked(self):
+		mouse_pos = pygame.mouse.get_pressed()
+		return mouse_pos[0] == 1 and self.hover()
+
