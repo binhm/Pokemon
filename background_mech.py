@@ -96,11 +96,11 @@ class camera:
 		# limit scrolling to map size
 		# print("mech.py: avatar coord x = {}, y = {}".format(-target.x, -target.y))
 		
-		x = min(0, x)  # left
-		y = min(0, y)  # top
+		# x = min(0, x)  # left
+		# y = min(0, y)  # top
 		# print("mech.py: avatar coord after min x = {}, y = {}".format(x, y))
-		x = max(-(self.width - WIDTH), x)  # right
-		y = max(-(self.height - HEIGHT), y)  # bottom
+		# x = max(-(self.width - WIDTH), x)  # right
+		# y = max(-(self.height - HEIGHT), y)  # bottom
 
-		# print("mech.py: map offset x = {}, y = {}".format(x,y))
+		print("mech.py: map offset x = {}, y = {}".format(x,y))
 		self.camera = pygame.Rect(x, y, self.width, self.height)
