@@ -1,4 +1,7 @@
 
+import pygame
+
+
 
 class Player:
 	def __init__(self, x_pos, y_pos):
@@ -113,3 +116,19 @@ class Player:
 		self.y = max (0, self.y)
 	def move(self, width, height):
 		pass
+
+	def handle_keys(self):
+		keys = pygame.key.get_pressed()
+		
+		'''
+		player movements
+		'''
+
+		if keys[pygame.K_UP]:
+			self.moveup()
+		if keys[pygame.K_DOWN]:
+			self.movedown()
+		if keys[pygame.K_RIGHT]:
+			self.moveright()
+		if keys[pygame.K_LEFT]:
+			self.moveleft()
