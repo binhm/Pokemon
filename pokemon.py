@@ -14,24 +14,27 @@ BACKGROUND = 'backgrounds/practice.tmx'
 ## for example, walls, houses, field of grass
 ENTITY = []
 
+
+
+
+
 class Pokemon:
-	def __init__(self):
+	def __init__(self, window, character: int):
 		self._running = True
 		self._pause = False
 		self.keys = None
 		self.player = None
-		self._window = None
-		self._mousex, self._mousey = (0,0)
-
+		self._window = window
+		self._charater = character
 		self.avatarcell = 0
 
 	def load(self):
 		'''setting up the game before the game's main while loop '''
 
 		##-------------setting up pygame window---------------
-		pygame.init()
-		self._window = pygame.display.set_mode((_INITIAL_BACKGROUD_WIDTH, _INITIAL_BACKGROUD_HEIGHT), pygame.RESIZABLE)
-		pygame.display.set_caption('Pokemon') # Sets the window name 
+		# pygame.init()
+		# self._window = pygame.display.set_mode((_INITIAL_BACKGROUD_WIDTH, _INITIAL_BACKGROUD_HEIGHT), pygame.RESIZABLE)
+		# pygame.display.set_caption('Pokemon') # Sets the window name 
 		##-------------setting up pygame window---------------
 		try:
 			## Since this is outside the main while loop to start the game, therefore self.quit() doesn't apply
@@ -39,18 +42,18 @@ class Pokemon:
 			## we need to prevent other functions from calling
 
 
-			##-------setting up character selection---------------
-			self.start_menu()
-			self.player = player.Player(_INITIAL_BACKGROUD_WIDTH/2, _INITIAL_BACKGROUD_HEIGHT/2)
-			character = self.avatar_selection() 
-			if character == None:
-				## temporary, maybe pit all of this under the start_menu
-				raise pygame.error()
-			self.player.avatar(character) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
+			# ##-------setting up character selection---------------
+			# self.start_menu()
+			# self.player = player.Player(_INITIAL_BACKGROUD_WIDTH/2, _INITIAL_BACKGROUD_HEIGHT/2)
+			# character = self.avatar_selection() 
+			# if character == None:
+			# 	## temporary, maybe pit all of this under the start_menu
+			# 	raise pygame.error()
+			# self.player.avatar(character) ## CHOSE THE AVATAR from 1 - 5, Can put somewhere else
+			# self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
+			# ##-------setting up character selection---------------
+			self.player = player.Player(_INITIAL_BACKGROUD_WIDTH/2, _INITIAL_BACKGROUD_HEIGHT/2, self._charater)
 			self.avatar = pygame.image.load(self.player.path).convert_alpha() # 
-			##-------setting up character selection---------------
-
-
 			## ----------setting up moving background-----------------
 			self.map = background_mech.Tiledmap(BACKGROUND) ## load filename
 			self.map_image = self.map.make_map() ## blit tiles to screen, return a surface with the tiles
@@ -228,7 +231,6 @@ class Pokemon:
 		self.camera.update(self.player)
 	
 
-		# print("pokemon.py - camera:{} {}".format(surface_width, surface_height))
 	def pause(self):
 		''' the pause state brings up the settings.
 			So far, the setting includes exit, save, Pokedex(?), 
@@ -359,7 +361,11 @@ class Pokemon:
 
 if __name__ == '__main__':
 	# print("uncomment lines in Pokemon.run()")
-	print("Adding games mechanic is in Pokemon.play().")
-	Pokemon().run()
-	print("in main")
+	print("=============================debugging purposes=================================================")
+	pygame.init()
+	pygame.display.set_caption('Pokemon')
+	CHARACTER = 1
+	WINDOW = pygame.display.set_mode((_INITIAL_BACKGROUD_WIDTH, _INITIAL_BACKGROUD_HEIGHT), pygame.RESIZABLE)
+	Pokemon(WINDOW, CHARACTER).run()
+	print("=============================debugging purposes=================================================")
     

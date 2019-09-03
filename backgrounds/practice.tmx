@@ -226,7 +226,7 @@
   <object id="12" name="wall" x="121" y="321" width="4" height="94"/>
   <object id="13" name="wall" x="0" y="401" width="47" height="13"/>
   <object id="14" name="wall" x="97" y="401" width="28" height="14"/>
-  <object id="15" name="wall" x="97" y="432" width="13" height="12"/>
+  <object id="15" name="sign" x="97" y="432" width="13" height="12"/>
   <object id="16" name="grass" x="-1" y="1" width="273" height="140"/>
   <object id="17" name="wall" x="136" y="232"/>
  </objectgroup>

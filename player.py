@@ -4,7 +4,7 @@ import pygame
 
 
 class Player:
-	def __init__(self, x_pos, y_pos):
+	def __init__(self, x_pos, y_pos, num: int):
 		self.x = x_pos
 		self.y = y_pos
 		self.width = 40
@@ -18,13 +18,13 @@ class Player:
 		self._spritec = 0
 		self._area = 0
 		# self._track_row = 1
-		self._avatar = 0
-		# self.screen_height = screen_height
-		# self.screen_width = screen_width
+		self._avatar = num
+		self.spritesheet()
+		
 	def avatar(self, num: int)-> 'path':
 		'''player needs to choose avatar, 
 			numbered from 1 and return a string path'''
-		self._avatar = num
+		# self._avatar = num
 		self.spritesheet()
 		return self.path
 
