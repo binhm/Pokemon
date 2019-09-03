@@ -62,9 +62,9 @@ class intro:
 						pass
 
 if __name__ == '__main__':
-
+	print("=============================debugging purposes=================================================")
 	pygame.init()
 	pygame.display.set_caption('Pokemon')
 	WINDOW = pygame.display.set_mode((_INITIAL_BACKGROUD_WIDTH, _INITIAL_BACKGROUD_HEIGHT), pygame.RESIZABLE)
 	intro(WINDOW).run()
-	pass
+	print("=============================debugging purposes=================================================")
