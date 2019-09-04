@@ -36,9 +36,25 @@ class battle:
 		pass
 		## also takes in opponent, make a separate file for opponent, which will have the algorthmn for the attacks
 		self._window = window
+		self._winner = False
 		
 	def run(self):
-		pass
+		clock = pygame.time.Clock()
+
+		while self._winner == False:
+			self._window.fill((255, 255, 255))
+			
+			pygame.display.update()
+			
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					pygame.quit()
+
+			
+			clock.tick(30)
+
+	def pokemon_fight(self):
+		pass	
 
 
 
