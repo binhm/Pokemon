@@ -39,20 +39,22 @@ class battle:
 		self._winner = False
 		
 	def run(self):
-		clock = pygame.time.Clock()
+		# clock = pygame.time.Clock()
 
 		while self._winner == False:
+				
+			
+			
 			self._window.fill((255, 255, 255))
-			
 			pygame.display.update()
-			
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
-					pygame.quit()
+						pygame.quit()
+						self._winner = True
 
 			
-			clock.tick(30)
-
+		# 	clock.tick(30)
+		pass
 	def pokemon_fight(self):
 		pass	
 
