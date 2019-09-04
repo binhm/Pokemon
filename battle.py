@@ -34,7 +34,9 @@ import pygame
 class battle:
 	def __init__(self, window):
 		pass
-
+		## also takes in opponent, make a separate file for opponent, which will have the algorthmn for the attacks
+		self._window = window
+		
 	def run(self):
 		pass
 

@@ -33,3 +33,26 @@ class Button:
 		mouse_pos = pygame.mouse.get_pressed()
 		return mouse_pos[0] == 1 and self.hover()
 
+	def change_box_color(self, color):
+		''' change the color of the rectangle'''
+		pass
+
+class Box:
+	def __init__(self, surface, box_area, box_pos, box_color = (0,0,0), text = None, font = 'Comic Sans MS', text_color = None):
+		self._window = surface
+		self._width, self._height = box_area	
+		self._x , self._y = box_pos
+		self._text = text
+		self._font = font
+		self._text_color = text_color
+	def draw(self):
+		pass
+	def change_box_color(self, color):
+		'''change the color of the rectangle box'''
+		pass
+	def add_text(self, text: str, font: int):
+		''' replace the old text with new text '''
+		pass
+	def within(self, coord: tuple):
+		''' checks if the coordinate is inside the box'''
+		pass
